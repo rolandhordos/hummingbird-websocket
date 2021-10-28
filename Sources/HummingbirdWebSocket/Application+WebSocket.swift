@@ -19,7 +19,7 @@ extension HBApplication {
     /// WebSocket interface
     public struct WebSocket {
         /// Context used to create HBRequest
-        struct WebSocketContext: HBRequestContext {
+        struct WebSocketContext: HBRequestContext, @unchecked Sendable {
             var eventLoop: EventLoop
             var allocator: ByteBufferAllocator
             var remoteAddress: SocketAddress? { nil }
@@ -71,8 +71,8 @@ extension HBApplication {
         ///   - onUpgrade: Called on upgrade with reference to WebSocket
         @discardableResult public func on(
             _ path: String = "",
-            shouldUpgrade: @escaping (HBRequest) -> EventLoopFuture<HTTPHeaders?> = { $0.success(nil) },
-            onUpgrade: @escaping (HBRequest, HBWebSocket) -> Void
+            shouldUpgrade: @escaping @Sendable (HBRequest) -> EventLoopFuture<HTTPHeaders?> = { $0.success(nil) },
+            onUpgrade: @escaping @Sendable (HBRequest, HBWebSocket) -> Void
         ) -> HBWebSocketRouterGroup {
             self.routerGroup.on(path, shouldUpgrade: shouldUpgrade, onUpgrade: onUpgrade)
         }

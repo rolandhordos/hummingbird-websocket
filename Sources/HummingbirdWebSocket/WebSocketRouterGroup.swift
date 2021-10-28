@@ -37,8 +37,8 @@ public struct HBWebSocketRouterGroup {
     ///   - onUpgrade: Closure called with web socket when connection has been upgraded
     @discardableResult public func on(
         _ path: String = "",
-        shouldUpgrade: @escaping (HBRequest) -> EventLoopFuture<HTTPHeaders?>,
-        onUpgrade: @escaping (HBRequest, HBWebSocket) throws -> Void
+        shouldUpgrade: @escaping @Sendable (HBRequest) -> EventLoopFuture<HTTPHeaders?>,
+        onUpgrade: @escaping @Sendable (HBRequest, HBWebSocket) throws -> Void
     ) -> Self {
         let responder = HBCallbackResponder { request in
             var request = request

@@ -16,7 +16,10 @@ import NIOCore
 import NIOWebSocket
 
 /// WebSocket object
-public final class HBWebSocket {
+///
+/// Set to @unchecked Sendable as access functions should control what
+/// EventLoop everything is running on. 
+public final class HBWebSocket: @unchecked Sendable {
     public enum SocketType {
         case client
         case server
